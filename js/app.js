@@ -780,7 +780,18 @@ function init() {
   themeToggle?.addEventListener('click', () => toggleTheme(themeToggle));
 
   loadGenres();
-  displayContent('home');
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const searchQuery = urlParams.get('search') || urlParams.get('q');
+  if (searchQuery) {
+    displayContent('home');
+    if (searchInput) {
+      searchInput.value = searchQuery;
+      searchInput.dispatchEvent(new Event('input'));
+    }
+  } else {
+    displayContent('home');
+  }
 }
 
 document.addEventListener('DOMContentLoaded', init);
